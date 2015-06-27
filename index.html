@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>ONE · 一个</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="./build/css/main.css?t=1435410706889" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="./build/css/main.css?t=1435422467246" media="screen" charset="utf-8">
   </head>
   <body>
     <div class="header container">
@@ -25,6 +25,7 @@
     <script id="list-template" type="text/template">
       <div class="container">
       {% for one in ones %}
+      {% if one.hpEntity.strAuthor %}
       <div class="one">
         <div class="cover" data-echo-background="{{one.hpEntity.strThumbnailUrl}}"></div>
         <div class="one-meta">
@@ -32,12 +33,14 @@
           <div class="one-des">{{one.hpEntity.strContent}}</div>
         </div>
       </div>
+      {% endif %}
       {% endfor %}
       </div>
     </script>
     <script id="things-template" type="text/template">
       <div class="container">
       {% for one in ones %}
+      {% if one.entTh.strTt %}
       <div class="one">
         <div class="cover" data-echo-background="{{one.entTh.strBu}}"></div>
         <div class="one-meta">
@@ -45,17 +48,20 @@
           <div class="one-des">{{one.entTh.strTc}}</div>
         </div>
       </div>
+      {% endif %}
       {% endfor %}
       </div>
     </script>
     <script id="questions-template" type="text/template">
       <div class="container">
       {% for one in ones %}
+      {% if one.questionAdEntity.strAnswerTitle %}
       <div class="one">
         <div class="one-q-title">{{one.questionAdEntity.strAnswerTitle}} {{one.questionAdEntity.strQuestionTitle}}</div>
         <div class="one-q-content">{{one.questionAdEntity.strQuestionContent}}</div>
         <div class="one-q-a">{{one.questionAdEntity.strAnswerContent|safe}}</div>
       </div>
+      {% endif %}
       {% endfor %}
       </div>
     </script>
@@ -65,6 +71,6 @@
       </div>
     </script>
     
-    <script src="./build/js/vendor.js?t=1435410706889"></script>
+    <script src="./build/js/vendor.js?t=1435422467246"></script>
   </body>
 </html>

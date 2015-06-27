@@ -25,6 +25,7 @@
     <script id="list-template" type="text/template">
       <div class="container">
       {% for one in ones %}
+      {% if one.hpEntity.strAuthor %}
       <div class="one">
         <div class="cover" data-echo-background="{{one.hpEntity.strThumbnailUrl}}"></div>
         <div class="one-meta">
@@ -32,12 +33,14 @@
           <div class="one-des">{{one.hpEntity.strContent}}</div>
         </div>
       </div>
+      {% endif %}
       {% endfor %}
       </div>
     </script>
     <script id="things-template" type="text/template">
       <div class="container">
       {% for one in ones %}
+      {% if one.entTh.strTt %}
       <div class="one">
         <div class="cover" data-echo-background="{{one.entTh.strBu}}"></div>
         <div class="one-meta">
@@ -45,17 +48,20 @@
           <div class="one-des">{{one.entTh.strTc}}</div>
         </div>
       </div>
+      {% endif %}
       {% endfor %}
       </div>
     </script>
     <script id="questions-template" type="text/template">
       <div class="container">
       {% for one in ones %}
+      {% if one.questionAdEntity.strAnswerTitle %}
       <div class="one">
         <div class="one-q-title">{{one.questionAdEntity.strAnswerTitle}} {{one.questionAdEntity.strQuestionTitle}}</div>
         <div class="one-q-content">{{one.questionAdEntity.strQuestionContent}}</div>
         <div class="one-q-a">{{one.questionAdEntity.strAnswerContent|safe}}</div>
       </div>
+      {% endif %}
       {% endfor %}
       </div>
     </script>
