@@ -6,7 +6,7 @@ var
   sourcemaps = require('gulp-sourcemaps'),
   concat = require('gulp-concat'),
   serve = require('gulp-serve'),
-  gcson = require('gulp-cson')
+  minifyHTML = require('gulp-minify-html');
 
 
 gulp.task('serve', serve({
@@ -29,6 +29,7 @@ gulp.task('html', function() {
   };
   gulp.src('./src/html/index.html')
     .pipe(swig(opts))
+    .pipe(minifyHTML())
     .pipe(gulp.dest('./'))
 })
 
