@@ -1,7 +1,7 @@
 var $ = document.getElementById.bind(document);
 var $$ = document.querySelectorAll.bind(document);
 var api = function(path) {
-  return 'http://dev.one.avosapps.com/api/' + path;
+  return 'http://one.avosapps.com/api/' + path;
 };
 
 function render(tpl, data) {
