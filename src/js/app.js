@@ -41,10 +41,19 @@ function lazyload() {
   echo.render()
 };
 
+window.addEventListener('hashchange', function() {
+  setTimeout(function() {
+    removeActive();
+    console.log(Q.lash)
+    $(Q.lash + '-button').classList.add('active');
+  }, 101);
+});
+
 ready(function() {
   lazyload();
   removeActive();
   $(Q.lash + '-button').classList.add('active');
+
 });
 
 function HomeRouter() {
