@@ -3,100 +3,60 @@
 
 body
   margin 0
-  background-color #fafafa
+  background-color #fff
   font 16px/1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"
+  overflow-x hidden
 
 h1,h2,h3,h4,h5,h6,ul,ol
   margin 0
 
+*
+  -webkit-box-sizing border-box
+  -moz-box-sizing border-box
+  box-sizing border-box
+
+.clearfix
+  &:after
+    content ''
+    display block
+    clear both
+    visibility hidden
+    height 0
+
 .container
-  max-width 555px
+  max-width 720px
   margin 0 auto
+  position relative
+
+ul
+  list-style none
+  padding-left 0
 
 a
   color #333
   text-decoration none
 
+.fr
+  float right
+
 .header
-  margin 20px auto
-  text-align center
+  margin-bottom 20px
+  background-color #f9f9f9
+  height 44px
+  line-height @height
 
 .site-title
   text-shadow 0 1px #fff
-  font-size 30px
+  font-size 20px
   display inline-block
+  a
+    display block
 
 .loading
   text-align center
   color #999
   text-shadow 0 1px #fff
   padding 30px 0
-
-.one
-  margin-bottom 20px
-  border 1px solid #edeeee
-  border-radius 3px
-  position relative
-  background-color white
-  .one-meta
-    .one-author
-      background-color white
-      text-align center
-      padding 10px
-      font-size 13px
-      color #999
-    .one-des
-      padding 10px 0
-      margin 0 10px
-      border-top 1px solid #eee
-      line-height 1.7
-  .cover
-    border-radius 3px 3px 0 0
-    max-width 100%
-    height 530px
-    background-color #eee
-    background-size cover
-    background-position center
-    position relative
-    .placeholder
-      position absolute
-      left 50%
-      top 50%
-      z-index -1
-
-.tabs
-  padding 20px 0
-  .tab
-    display inline-block
-    border-radius 33px
-    border 1px solid #e2e2e2
-    padding 5px 20px
-    &.active
-      border-color #333
-
-.one-q-title
-  font-weight bold
-
-.one-q-content
-  font-size 14px
-  color #999
-
-.one-q-title,.one-q-content
-  background-color #f9f9f9
-  padding 10px
-
-.one-q-a
-  line-height 1.7
-  padding 10px
-  p
-    margin 0 0 30px 0
-    &:last-child
-      margin-bottom 0
-
-.one-thing-name
-  padding 10px
-  font-size 20px
-  font-weight bold
 
 .footer
   padding 30px 0
@@ -106,3 +66,60 @@ a
   color #999
   a
     color @color
+
+.form-control
+  padding-left 8px
+  padding-right 20px
+  overflow hidden
+  background-color: #fff
+  border 1px solid #aaa
+  border-radius 4px
+  outline none
+  height 28px
+
+textarea
+    display block
+    width 100%
+
+.col-1-3
+  width 33.333%
+  float left
+
+.select2-selection__rendered
+  font-size 13px
+
+.pagenavi-disable
+   pointer-events none
+   cursor not-allowed
+   opacity .65
+   color #999
+
+#pagenavi
+  text-align center
+
+.pagenavi
+  padding-top 20px
+  .pagenavi-link
+    border 1px solid #e2e2e2
+    padding 10px 15px
+    &:hover
+      background-color #f9f9f9
+  .pagenavi-left
+    border-radius 3px 0 0 3px
+    margin-right -3px
+  .pagenavi-right
+    border-radius 0 3px 3px 0
+    border-left none
+
+.user-header
+  border-bottom 1px solid #e2e2e2
+  padding-bottom 20px
+  margin-bottom 20px
+
+@import 'button'
+@import 'nav'
+@import 'alert'
+@import 'editor'
+@import 'biu'
+@import 'item'
+@import 'highlight'
