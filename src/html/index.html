@@ -23,7 +23,7 @@
       <ul class="nav-right">
         {% if userdata %}
         <li>
-          <a class="nav-tab" href="#!user/{{userdata.login}}">{{userdata.login}}</a>
+          <a class="nav-tab{% if navTab == 'user' %} active{% endif %}" href="#!user/{{userdata.login}}">{{userdata.login}}</a>
         </li>
         <li>
           <a class="nav-tab{% if navTab == 'new' %} active{% endif %}" href="#!new">Share</a>
@@ -103,7 +103,7 @@
         </div>
       </div>
       <div id="editor"></div>
-      <div class="editor-footer">
+      <div class="editor-footer clearfix">
         <div class="fr">
           <button class="btn" data-public="true" data-type="{% if randomid %}update{% else %}new{% endif %}" id="submit-public">Submit public code</button>
         </div>
@@ -116,7 +116,7 @@
     </script>
     <script id="user-template" type="text/template">
 
-      <section id="userinfo"></section>
+      <section id="userinfo">Loading...</section>
       <section id="user-codes"></section>
     </script>
     <script id="userinfo-template" type="text/template">

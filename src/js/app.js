@@ -299,7 +299,8 @@ function UserRouter(username, action, page) {
   action = action || 'code'; 
   loading();
   renderHeader({
-    userdata: store.get('userdata')
+    userdata: store.get('userdata'),
+    navTab: 'user'
   });
   $('#output').html(render('user'));
   qwest
