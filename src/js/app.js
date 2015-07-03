@@ -1,5 +1,5 @@
 var api = function(path) {
-  return 'https://inshare.avosapps.com/api/' + path;
+  return 'https://raw.avosapps.com/api/' + path;
 };
 var store = new Store();
 store.init({
@@ -51,6 +51,8 @@ function HomeRouter(page) {
     .then(function(data) {
       for (var i = 0; i < data.codes.length; i++) {
         data.codes[i].line_number = lineNumber(data.codes[i].content);
+        data.codes[i].timeago = moment(data.codes[i].createdAt).fromNow();
+        data.codes[i].time = moment(data.codes[i].createdAt).format('dddd, MMMM Do YYYY, H:mm:ss a Z');
       }
       var homeHTML = render('list', {
         codes: data.codes
@@ -276,6 +278,8 @@ function CodeRouter(randomid, action) {
         title(pagetitle);
         for (var i = 0; i < data.codes.length; i++) {
           data.codes[i].line_number = lineNumber(data.codes[i].content);
+          data.codes[i].timeago = moment(data.codes[i].createdAt).fromNow();
+        data.codes[i].time = moment(data.codes[i].createdAt).format('dddd, MMMM Do YYYY, H:mm:ss a Z');
         }
         var html = render('list', {
           codes: data.codes,
@@ -312,6 +316,8 @@ function UserRouter(username, action, page) {
     .then(function(data) {
       for (var i = 0; i < data.codes.length; i++) {
         data.codes[i].line_number = lineNumber(data.codes[i].content);
+        data.codes[i].timeago = moment(data.codes[i].createdAt).fromNow();
+        data.codes[i].time = moment(data.codes[i].createdAt).format('dddd, MMMM Do YYYY, H:mm:ss a Z');
       }
       var HTML = render('list', {
         codes: data.codes

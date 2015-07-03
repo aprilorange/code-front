@@ -50,10 +50,12 @@
               <span>{% if code.title %}{{code.title}}{% else %}untitled{% endif %}</span>
               <span class="meta-sep"></span>
               <span><a href="#!user/{{code.author.username}}">{{code.author.username}}</a></span>
+              <span class="meta-sep"></span>
+              <span data-hint="{{code.time}}" class="hint--right">{{ code.timeago }}</span>
             </div>
             <div class="item-code-content{% if codepage %} codepage{% endif %}">{% if not codepage %}<a href="#!code/{{code.randomid}}" class="pre-pointer">link</a>{% endif %}
             <header class="item-code-content-meta">
-              <b class="octicon octicon-gist"></b> {% if code.title %}{{code.title}}{% else %}untitled{% endif %}
+              <b class="octicon octicon-gist"></b> <a data-hint="The link to the code" class="hint--bottom item-code-meta-title" href="#!code/{{code.randomid}}">{% if code.title %}{{code.title}}{% else %}untitled{% endif %}</a>
               {% if codepage %}
               <div class="fr">
                 {% if current_user == code.author.objectId %}
