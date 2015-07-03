@@ -34,7 +34,7 @@ gulp.task('html', function() {
 })
 
 gulp.task('css', function() {
-  gulp.src('./src/styl/main.styl')
+  gulp.src(['./src/styl/main.styl', './src/styl/frame.styl'])
     .pipe(stylus({
       compress: true
     }))
