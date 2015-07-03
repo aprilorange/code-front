@@ -62,9 +62,12 @@
         </div>
         {% if codepage %}
         <div class="item-code-opts">
-        <a href="javascript:;" class="html2canvas">Convert to Image</a>
+          <div class="item-code-frame">
+          <b class="small-title">Embed</b>
+            <input style="width:100%" spellcheck="false" class="form-control" value='&lt;script src="//raw.avosapps.com/api/code/{{code.randomid}}/embed"&gt;&lt;/script&gt;'>
+
+          </div>
         </div>
-        <div id="convertedImage"></div>
         {% endif %}
       {% endfor %}
       </div>
