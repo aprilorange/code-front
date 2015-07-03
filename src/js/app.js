@@ -9,6 +9,7 @@ biuOpts.height = '44px';
 biuOpts.lineHeight = '44px';
 biuOpts.top = '-46px';
 var editorLoaded = false;
+var loadedCanvas = false;
 
 function render(tpl, data) {
   var html = $('#' + tpl + '-template').html();
@@ -270,6 +271,17 @@ function CodeRouter(randomid, action) {
     userdata: store.get('userdata')
   });
   loading();
+  if(!loadedCanvas) {
+    loadedCanvas = true;
+    $.getScript('/build/js/html2canvas.min.js', function() {
+      $('body').on('click', '.html2canvas', function() {
+        html2canvas(document.getElementById('toImage')).then(function(canvas) {
+            $('#convertedImage').html(canvas);
+        });
+      })
+    });
+  }
+  
   if (!action) {
     qwest
       .get(api('code/' + randomid))
@@ -352,6 +364,7 @@ $(function() {
     .on('click', '.close', function() {
       $(this).parent().slideUp();
     })
+
 
 
 });

@@ -53,20 +53,19 @@
               <span class="meta-sep"></span>
               <span data-hint="{{code.time}}" class="hint--right">{{ code.timeago }}</span>
             </div>
-            <div class="item-code-content{% if codepage %} codepage{% endif %}">{% if not codepage %}<a href="#!code/{{code.randomid}}" class="pre-pointer">link</a>{% endif %}
+            <div{% if codepage %} id="toImage"{% endif %} class="item-code-content{% if codepage %} codepage{% endif %}">{% if not codepage %}<a href="#!code/{{code.randomid}}" class="pre-pointer">link</a>{% endif %}
             <header class="item-code-content-meta">
               <b class="octicon octicon-gist"></b> <a data-hint="The link to the code" class="hint--bottom item-code-meta-title" href="#!code/{{code.randomid}}">{% if code.title %}{{code.title}}{% else %}untitled{% endif %}</a>
-              {% if codepage %}
-              <div class="fr">
-                {% if current_user == code.author.objectId %}
-                  <a class="btn btn-sm" href="#!new/{{code.randomid}}">Edit</a>
-                {% endif %}
-              </div>
-              {% endif %}
             </header>
             <pre class="pre">{{code.line_number|safe}}<code class="{{code.language.toLowerCase()}}">{{code.content_highlight|safe}}</code></pre></div>
           </header>
         </div>
+        {% if codepage %}
+        <div class="item-code-opts">
+        <a href="javascript:;" class="html2canvas">Convert to Image</a>
+        </div>
+        <div id="convertedImage"></div>
+        {% endif %}
       {% endfor %}
       </div>
     </script>
