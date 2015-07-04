@@ -429,3 +429,17 @@ function title(text, all) {
   }
   $('title').html(text + ' - ' + 'Code');
 };
+
+function deleteCode(code_obj_id) {
+  if(confirm('Confirm the deleting action to code '+code_obj_id+' ?')) {
+    qwest
+      .post(api('code/delete'), {
+        code_id: code_obj_id,
+        user_id: store.get('user_id')
+      })
+      .then(function(data) {
+        biu('success', 'Deleted!');
+        Q.go('home');
+      })
+  }
+};
