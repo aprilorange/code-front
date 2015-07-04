@@ -6,6 +6,7 @@ var
   sourcemaps = require('gulp-sourcemaps'),
   concat = require('gulp-concat'),
   serve = require('gulp-serve'),
+  moment = require('moment-timezone'),
   minifyHTML = require('gulp-minify-html');
 
 
@@ -25,7 +26,7 @@ gulp.task('js', function() {
 
 gulp.task('html', function() {
   var opts = {
-    defaults: { cache: false, locals: { buildTime: new Date().getTime() } }
+    defaults: { cache: false, locals: { buildTime: moment(new Date().getTime()).format('YYYY-MM-DD-H-i-s') } }
   };
   gulp.src('./src/html/index.html')
     .pipe(swig(opts))
