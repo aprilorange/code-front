@@ -79,8 +79,9 @@
               {% endif %}
             </header>
             {% endif %}
-            {% if code.language == 'Markdown' %}
-              <div class="markdown-body">{{code.content_highlight|safe}}</div>
+            {% if code.language == 'Markdown' and codepage %}
+              <div class="markdown-body">{{code.marked|safe}}</div>
+             
             {% else %}
               <pre class="pre">{{code.line_number|safe}}<code class="{{code.language.toLowerCase()}}">{{code.content_highlight|safe}}</code></pre>
             {% endif %}
@@ -88,6 +89,7 @@
             </div>
           </header>
         </div>
+        
         {% if codepage %}
         <div class="item-code-opts">
           <div class="item-code-frame">
