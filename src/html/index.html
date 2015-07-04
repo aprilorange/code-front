@@ -18,22 +18,25 @@
     <header class="header">
       <div class="container">
       <h1 class="site-title">
-          <a href="#!home">Code</a>
+          <a href="/#!home">Code</a>
       </h1>
+      <form class="search-form">
+        <input class="site-search" name="q" value="{{q}}">
+      </form>
       <ul class="nav-right">
         {% if userdata %}
         <li>
-          <a class="nav-tab{% if navTab == 'user' %} active{% endif %}" href="#!user/{{userdata.login}}">{{userdata.login}}</a>
+          <a class="nav-tab{% if navTab == 'user' %} active{% endif %}" href="/#!user/{{userdata.login}}">{{userdata.login}}</a>
         </li>
         <li>
-          <a class="nav-tab{% if navTab == 'new' %} active{% endif %}" href="#!new">Share</a>
+          <a class="nav-tab{% if navTab == 'new' %} active{% endif %}" href="/#!new">Share</a>
         </li>
         <li>
-          <a class="nav-tab" href="#!logout">Exit</a>
+          <a class="nav-tab" href="/#!logout">Exit</a>
         </li>
         {% else %}
         <li>
-          <a class="btn btn-sm btn-round" href="#!signin">Sign in with GitHub</a>
+          <a class="btn btn-sm btn-round" href="/#!signin">Sign in with GitHub</a>
         </li>
         {% endif %}
       </ul>
@@ -41,6 +44,11 @@
     </header>
     </script>
     <script id="list-template" type="text/template">
+      {% if search_query %}
+      <div class="search-result-header">
+        We got {{hits}} result{%if codes.length > 1 %}s{%endif%} for <span>「{{search_query}}」</span>:
+      </div>
+      {% endif %}
       <div class="list-codes">
       {% for code in codes %}
         <div class="item-code">
@@ -49,18 +57,18 @@
             <div class="item-code-meta">
               <span>{% if code.title %}{{code.title}}{% else %}untitled{% endif %}</span>
               <span class="meta-sep"></span>
-              <span><a href="#!user/{{code.author.username}}">{{code.author.username}}</a></span>
+              <span><a href="/#!user/{{code.author.username}}">{{code.author.username}}</a></span>
               <span class="meta-sep"></span>
               <span data-hint="{{code.time}}" class="hint--right">{{ code.timeago }}</span>
             </div>
-            <div{% if codepage %} id="toImage"{% endif %} class="item-code-content{% if codepage %} codepage{% endif %}">{% if not codepage %}<a href="#!code/{{code.randomid}}" class="pre-pointer">link</a>{% endif %}
+            <div{% if codepage %} id="toImage"{% endif %} class="item-code-content{% if codepage %} codepage{% endif %}">{% if not codepage %}<a href="/#!code/{{code.randomid}}" class="pre-pointer">link</a>{% endif %}
             {% if codepage %}
             <header class="item-code-content-meta">
-              <b class="octicon octicon-gist"></b> <a data-hint="The link to the code" class="hint--bottom item-code-meta-title" href="#!code/{{code.randomid}}">{% if code.title %}{{code.title}}{% else %}untitled{% endif %}</a>
+              <b class="octicon octicon-gist"></b> <a data-hint="The link to the code" class="hint--bottom item-code-meta-title" href="/#!code/{{code.randomid}}">{% if code.title %}{{code.title}}{% else %}untitled{% endif %}</a>
               {% if codepage %}
               <div class="fr">
                 {% if current_user == code.author.objectId %}
-                  <a class="btn btn-sm btn-blue" href="#!new/{{code.randomid}}">Edit</a>
+                  <a class="btn btn-sm btn-blue" href="/#!new/{{code.randomid}}">Edit</a>
                   <a class="btn btn-sm btn-red" onclick="deleteCode('{{code.objectId}}')" href="javascript:;">Delete</a>
                 {% endif %}
               </div>
@@ -81,12 +89,17 @@
         {% endif %}
       {% endfor %}
       </div>
+      {% if search_query and codes.length == 0 %}
+        <div class="no-search-result">
+          Nothing matches your query :(
+        </div>
+      {% endif %}
     </script>
     <script id="pagenavi-template" type="text/template">
       <div class="pagenavi">
-        <a class="pagenavi-link pagenavi-left{% if not hasPrev %} pagenavi-disable{% endif %}" href="#!{{prep}}/{{prevpage}}">Prev</a>
+        <a class="pagenavi-link pagenavi-left{% if not hasPrev %} pagenavi-disable{% endif %}" href="/#!{{prep}}/{{prevpage}}">Prev</a>
         
-        <a class="pagenavi-link pagenavi-right{% if not hasNext %} pagenavi-disable{% endif %}" href="#!{{prep}}/{{nextpage}}">Next</a>
+        <a class="pagenavi-link pagenavi-right{% if not hasNext %} pagenavi-disable{% endif %}" href="/#!{{prep}}/{{nextpage}}">Next</a>
       </div>
     </script>
     <script id="new-template" type="text/template">
@@ -124,7 +137,7 @@
     </script>
     <script id="userinfo-template" type="text/template">
     <header class="user-header">
-        <span class="octicon octicon-person"></span> <a href="#!user/{{username}}">{{username}}</a>
+        <span class="octicon octicon-person"></span> <a href="/#!user/{{username}}">{{username}}</a>
     </header>
     </script>
     {% endraw %}

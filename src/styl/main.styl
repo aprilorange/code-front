@@ -56,6 +56,7 @@ a
   text-shadow 0 1px #fff
   font-size 20px
   display inline-block
+  float left
   a
     display block
 
@@ -130,6 +131,45 @@ textarea
   display block
   font-size 14px
   color #999
+
+.search-form
+  float left
+  position relative
+  left 20px
+  &:before
+    font normal normal normal 16px/1 octicons
+    content '\f02e'
+    position absolute
+    left 10px
+    top 16px
+    color #778087
+  .site-search
+    padding-left 30px
+    border 1px solid #e2e2e2
+    border-radius 33px
+    height 24px
+    line-height @height
+    outline none
+    transition border-color .3s ease-in-out
+    &:focus
+      border-color #999
+
+.search-result-header
+  padding-bottom 10px
+  border-bottom 1px solid #e2e2e2
+  margin-bottom 10px
+  font-weight bold
+  color #999
+  span
+    color green
+    
+
+.no-search-result
+  padding 30px
+  margin 10px 0
+  border 2px dashed #ccc
+  text-align center
+  font-size 20px
 
 @import 'button'
 @import 'nav'

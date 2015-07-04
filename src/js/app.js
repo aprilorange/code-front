@@ -49,11 +49,7 @@ function HomeRouter(page) {
       page: page
     })
     .then(function(data) {
-      for (var i = 0; i < data.codes.length; i++) {
-        data.codes[i].line_number = lineNumber(data.codes[i].content);
-        data.codes[i].timeago = moment(data.codes[i].createdAt).fromNow();
-        data.codes[i].time = moment(data.codes[i].createdAt).format('dddd, MMMM Do YYYY, H:mm:ss a Z');
-      }
+      data = parseData(data);
       var homeHTML = render('list', {
         codes: data.codes
       });
@@ -279,7 +275,7 @@ function CodeRouter(randomid, action) {
         for (var i = 0; i < data.codes.length; i++) {
           data.codes[i].line_number = lineNumber(data.codes[i].content);
           data.codes[i].timeago = moment(data.codes[i].createdAt).fromNow();
-        data.codes[i].time = moment(data.codes[i].createdAt).format('dddd, MMMM Do YYYY, H:mm:ss a Z');
+          data.codes[i].time = moment(data.codes[i].createdAt).format('dddd, MMMM Do YYYY, H:mm:ss a Z');
         }
         var html = render('list', {
           codes: data.codes,
@@ -296,7 +292,7 @@ function CodeRouter(randomid, action) {
 
 function UserRouter(username, action, page) {
   page = parseInt(page) || 1;
-  action = action || 'code'; 
+  action = action || 'code';
   loading();
   renderHeader({
     userdata: store.get('userdata'),
@@ -304,7 +300,7 @@ function UserRouter(username, action, page) {
   });
   $('#output').html(render('user'));
   qwest
-    .get(api('user/'+username))
+    .get(api('user/' + username))
     .then(function(data) {
       var userinfo = render('userinfo', data.user);
       $('#userinfo').html(userinfo);
@@ -336,7 +332,7 @@ function UserRouter(username, action, page) {
             hasNext = false;
           }
           var pagenavi = render('pagenavi', {
-            prep: 'user/'+action,
+            prep: 'user/' + action,
             hasNext: hasNext,
             hasPrev: hasPrev,
             nextpage: page - 1,
@@ -353,7 +349,16 @@ $(function() {
     .on('click', '.close', function() {
       $(this).parent().slideUp();
     })
+    .on('submit', '.search-form', function() {
+      var form = $(this);
+      var value = form.find('input').val();
+      if (!value) {
 
+      } else {
+        Q.go('search/' + value);
+      }
+      return false;
+    })
 
 
 });
@@ -365,7 +370,52 @@ Q.reg('done', DoneRouter)
 Q.reg('logout', ExitRouter);
 Q.reg('code', CodeRouter);
 Q.reg('user', UserRouter);
+Q.reg('search', SearchRouter);
 
+function SearchRouter(q, page) {
+  page = page || 1;
+  renderHeader({
+    userdata: store.get('userdata'),
+    q: q
+  });
+  loading();
+  qwest
+    .get(api('search'), {
+      q: q,
+      page: page
+    })
+    .then(function(data) {
+      data = parseData(data);
+      var sid = data.sid;
+      var HTML = render('list', {
+        codes: data.codes,
+        hits: data.hits,
+        search_query: q
+      });
+      $('#output').html(HTML + '<div id="pagenavi"></div>');
+      qwest
+        .get(api('search'), {
+          page: page + 1,
+          q: q,
+          sid: sid
+        })
+        .then(function(data) {
+          var hasPrev = data.codes.length > 0 ? true : false;
+          var hasNext = true;
+          if (page == 1) {
+            hasNext = false;
+          }
+          var pagenavi = render('pagenavi', {
+            prep: 'search/' + q,
+            hasNext: hasNext,
+            hasPrev: hasPrev,
+            nextpage: page - 1,
+            prevpage: page + 1
+          });
+          $('#pagenavi').html(pagenavi);
+        })
+    })
+};
 
 function renderHeader(data) {
   var header = render('header', data);
@@ -431,7 +481,7 @@ function title(text, all) {
 };
 
 function deleteCode(code_obj_id) {
-  if(confirm('Confirm the deleting action to code '+code_obj_id+' ?')) {
+  if (confirm('Confirm the deleting action to code ' + code_obj_id + ' ?')) {
     qwest
       .post(api('code/delete'), {
         code_id: code_obj_id,
@@ -443,3 +493,12 @@ function deleteCode(code_obj_id) {
       })
   }
 };
+
+function parseData(data) {
+  for (var i = 0; i < data.codes.length; i++) {
+    data.codes[i].line_number = lineNumber(data.codes[i].content);
+    data.codes[i].timeago = moment(data.codes[i].createdAt).fromNow();
+    data.codes[i].time = moment(data.codes[i].createdAt).format('dddd, MMMM Do YYYY, H:mm:ss a Z');
+  }
+  return data;
+}
