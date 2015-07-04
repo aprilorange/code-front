@@ -68,6 +68,7 @@
               {% if codepage %}
               <div class="fr">
                 {% if current_user == code.author.objectId %}
+                  <a class="btn btn-sm" href="//raw.avosapps.com/api/code/{{code.randomid}}/raw">Raw</a>
                   <a class="btn btn-sm btn-blue" href="/#!new/{{code.randomid}}">Edit</a>
                   <a class="btn btn-sm btn-red" onclick="deleteCode('{{code.objectId}}')" href="javascript:;">Delete</a>
                 {% endif %}
