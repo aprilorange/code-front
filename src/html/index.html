@@ -79,7 +79,12 @@
               {% endif %}
             </header>
             {% endif %}
+            {% if code.language == markdown %}
+            {{code.content_highlight|safe}}
+            {% else %}
               <pre class="pre">{{code.line_number|safe}}<code class="{{code.language.toLowerCase()}}">{{code.content_highlight|safe}}</code></pre>
+            {% endif %}
+            
             </div>
           </header>
         </div>

@@ -501,10 +501,11 @@ function deleteCode(code_obj_id) {
 
 function parseData(data) {
   for (var i = 0; i < data.codes.length; i++) {
-    data.codes[i].line_number = lineNumber(data.codes[i].content);
+    
     data.codes[i].timeago = moment(data.codes[i].createdAt).fromNow();
-    if(data.codes[i].language.toLowerCase() == 'markdown') {
+    if(data.codes[i].language.toLowerCase() != 'markdown') {
       //data.codes[i].markdown = marked(data.codes[i].content);
+      data.codes[i].line_number = lineNumber(data.codes[i].content);
     }
     data.codes[i].time = moment(data.codes[i].createdAt).format('dddd, MMMM Do YYYY, H:mm:ss a Z');
   }

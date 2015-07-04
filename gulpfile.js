@@ -16,7 +16,7 @@ gulp.task('serve', serve({
 }))
 
 gulp.task('js', function() {
-  gulp.src(['./src/js/jquery.js', './src/js/marked.js', './src/js/moment.js', './src/js/moment-timezone.js', './src/js/async.js', './src/js/nunjucks.js', './src/js/biu.js', './src/js/store.js', './src/js/qwest.js', './src/js/q.js', './src/js/app.js'])
+  gulp.src(['./src/js/jquery.js', './src/js/moment.js', './src/js/moment-timezone.js', './src/js/async.js', './src/js/nunjucks.js', './src/js/biu.js', './src/js/store.js', './src/js/qwest.js', './src/js/q.js', './src/js/app.js'])
     .pipe(sourcemaps.init())
     .pipe(concat('vendor.js'))
     .pipe(uglify())
