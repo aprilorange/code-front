@@ -71,6 +71,9 @@ function HomeRouter(page) {
             nextpage: page - 1,
             prevpage: page + 1
           });
+          if(!hasNext && !hasPrev) {
+            pagenavi = '';
+          }
           $('#pagenavi').html(pagenavi);
         })
     })
@@ -338,6 +341,9 @@ function UserRouter(username, action, page) {
             nextpage: page - 1,
             prevpage: page + 1
           });
+          if(!hasNext && !hasPrev) {
+            pagenavi = '';
+          }
           $('#pagenavi').html(pagenavi);
         })
     })
@@ -412,6 +418,9 @@ function SearchRouter(q, page) {
             nextpage: page - 1,
             prevpage: page + 1
           });
+          if(!hasNext && !hasPrev) {
+            pagenavi = '';
+          }
           $('#pagenavi').html(pagenavi);
         })
     })
