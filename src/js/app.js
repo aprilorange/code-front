@@ -275,11 +275,7 @@ function CodeRouter(randomid, action) {
       .then(function(data) {
         var pagetitle = data.codes[0].title || data.codes[0].description;
         title(pagetitle);
-        for (var i = 0; i < data.codes.length; i++) {
-          data.codes[i].line_number = lineNumber(data.codes[i].content);
-          data.codes[i].timeago = moment(data.codes[i].createdAt).fromNow();
-          data.codes[i].time = moment(data.codes[i].createdAt).format('dddd, MMMM Do YYYY, H:mm:ss a Z');
-        }
+        data = parseData(data);
         var html = render('list', {
           codes: data.codes,
           codepage: true,
@@ -507,6 +503,9 @@ function parseData(data) {
   for (var i = 0; i < data.codes.length; i++) {
     data.codes[i].line_number = lineNumber(data.codes[i].content);
     data.codes[i].timeago = moment(data.codes[i].createdAt).fromNow();
+    if(data.codes[i].language.toLowerCase() == 'markdown') {
+      data.codes[i].markdown = marked(data.codes[i].content);
+    }
     data.codes[i].time = moment(data.codes[i].createdAt).format('dddd, MMMM Do YYYY, H:mm:ss a Z');
   }
   return data;

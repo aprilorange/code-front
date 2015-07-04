@@ -5,6 +5,7 @@
     <title>Code</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="http://cdn.staticfile.org/octicons/2.1.2/octicons.min.css">
+    <link rel="stylesheet" type="text/css" href="/build/css/markdown.css ">
     <link rel="stylesheet" href="./build/css/main.css?t={{buildTime}}" media="screen" charset="utf-8">
   </head>
   <body>
@@ -78,7 +79,14 @@
               {% endif %}
             </header>
             {% endif %}
-            <pre class="pre">{{code.line_number|safe}}<code class="{{code.language.toLowerCase()}}">{{code.content_highlight|safe}}</code></pre></div>
+            {% if code.language == 'Markdown' %}
+            <div class="markdown-body">
+              {{code.markdown|safe}}
+            </div>
+            {% else %}
+              <pre class="pre">{{code.line_number|safe}}<code class="{{code.language.toLowerCase()}}">{{code.content_highlight|safe}}</code></pre>
+            {% endif %}
+            </div>
           </header>
         </div>
         {% if codepage %}
