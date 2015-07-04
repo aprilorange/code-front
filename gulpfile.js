@@ -26,7 +26,7 @@ gulp.task('js', function() {
 
 gulp.task('html', function() {
   var opts = {
-    defaults: { cache: false, locals: { buildTime: moment(new Date().getTime()).format('YYYY-MM-DD-H-i-s') } }
+    defaults: { cache: false, locals: { buildTime: moment(new Date().getTime()).format() } }
   };
   gulp.src('./src/html/index.html')
     .pipe(swig(opts))
