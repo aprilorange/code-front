@@ -79,8 +79,8 @@
               {% endif %}
             </header>
             {% endif %}
-            {% if code.language == markdown %}
-            {{code.content_highlight|safe}}
+            {% if code.language == 'Markdown' %}
+              <div class="markdown-body">{{code.content_highlight|safe}}</div>
             {% else %}
               <pre class="pre">{{code.line_number|safe}}<code class="{{code.language.toLowerCase()}}">{{code.content_highlight|safe}}</code></pre>
             {% endif %}
