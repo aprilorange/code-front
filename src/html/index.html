@@ -57,6 +57,8 @@
             <div class="item-code-meta">
               <span>{% if code.title %}{{code.title}}{% else %}untitled{% endif %}</span>
               <span class="meta-sep"></span>
+              {{ code.language }}
+              <span class="meta-sep"></span>
               <span><a href="/#!user/{{code.author.username}}">{{code.author.username}}</a></span>
               <span class="meta-sep"></span>
               <span data-hint="{{code.time}}" class="hint--right">{{ code.timeago }}</span>
