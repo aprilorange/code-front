@@ -259,8 +259,10 @@ function DoneRouter(github_access_token) {
 };
 
 function ExitRouter() {
-  if (store.removeAll()) {
-    Q.go('home');
+  if(confirm('Really want to sign out?')) {
+    if (store.removeAll()) {
+      Q.go('home');
+    }
   }
 };
 
