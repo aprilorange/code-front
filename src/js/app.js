@@ -414,7 +414,8 @@ function SearchRouter(q, page) {
             hasNext: hasNext,
             hasPrev: hasPrev,
             nextpage: page - 1,
-            prevpage: page + 1
+            prevpage: page + 1,
+            sid: sid
           });
           if(!hasNext && !hasPrev) {
             pagenavi = '';
