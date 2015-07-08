@@ -63,6 +63,10 @@
               <span><a href="/#!user/{{code.author.username}}">{{code.author.username}}</a></span>
               <span class="meta-sep"></span>
               <span data-hint="{{code.time}}" class="hint--right">{{ code.timeago }}</span>
+              {% if codepage %}
+              <span class="meta-sep"></span>
+              <span>{{code.views}} view{%if code.views > 1%}s{%endif%}</span>
+              {% endif %}
             </div>
             <div{% if codepage %} id="toImage"{% endif %} class="item-code-content{% if codepage %} codepage{% endif %}">{% if not codepage %}<a href="/#!code/{{code.randomid}}" class="pre-pointer">link</a>{% endif %}
             {% if codepage %}
