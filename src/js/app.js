@@ -71,7 +71,7 @@ function HomeRouter(page) {
             nextpage: page - 1,
             prevpage: page + 1
           });
-          if(!hasNext && !hasPrev) {
+          if (!hasNext && !hasPrev) {
             pagenavi = '';
           }
           $('#pagenavi').html(pagenavi);
@@ -259,7 +259,7 @@ function DoneRouter(github_access_token) {
 };
 
 function ExitRouter() {
-  if(confirm('Really want to sign out?')) {
+  if (confirm('Really want to sign out?')) {
     if (store.removeAll()) {
       Q.go('home');
     }
@@ -293,59 +293,74 @@ function CodeRouter(randomid, action) {
 
 function UserRouter(username, action, page) {
   page = parseInt(page) || 1;
-  action = action || 'code';
+  action = action || 'codes';
+  var userdata = store.get('userdata');
   loading();
   renderHeader({
-    userdata: store.get('userdata'),
+    userdata: userdata,
     navTab: 'user'
   });
   $('#output').html(render('user'));
   qwest
     .get(api('user/' + username))
     .then(function(data) {
+      data.user.userdata = userdata;
+      data.user.my_id = store.get('user_id');
+      data.user.tab = action;
       var userinfo = render('userinfo', data.user);
       $('#userinfo').html(userinfo);
     })
-  qwest
-    .get(api('latest'), {
-      page: page,
-      user: username
+  if (action == 'folders') {
+    qwest.get(api('folders'), {
+      username: username
     })
     .then(function(data) {
-      for (var i = 0; i < data.codes.length; i++) {
-        data.codes[i].line_number = lineNumber(data.codes[i].content);
-        data.codes[i].timeago = moment(data.codes[i].createdAt).fromNow();
-        data.codes[i].time = moment(data.codes[i].createdAt).format('dddd, MMMM Do YYYY, H:mm:ss a Z');
-      }
-      var HTML = render('list', {
-        codes: data.codes
-      });
-      $('#user-codes').html(HTML + '<div id="pagenavi"></div>');
-      qwest
-        .get(api('latest'), {
-          page: page + 1,
-          user: username
-        })
-        .then(function(data) {
-          var hasPrev = data.codes.length > 0 ? true : false;
-          var hasNext = true;
-          if (page == 1) {
-            hasNext = false;
-          }
-          var pagenavi = render('pagenavi', {
-            prep: 'user/' + action,
-            hasNext: hasNext,
-            hasPrev: hasPrev,
-            nextpage: page - 1,
-            prevpage: page + 1
-          });
-          if(!hasNext && !hasPrev) {
-            pagenavi = '';
-          }
-          $('#pagenavi').html(pagenavi);
-        })
+      var html = render('folders', {
+        folders: data.folders
+      })
+      $('#user-folders').html(html);
     })
-
+  } else if (action == 'codes') {
+    qwest
+      .get(api('latest'), {
+        page: page,
+        user: username
+      })
+      .then(function(data) {
+        for (var i = 0; i < data.codes.length; i++) {
+          data.codes[i].line_number = lineNumber(data.codes[i].content);
+          data.codes[i].timeago = moment(data.codes[i].createdAt).fromNow();
+          data.codes[i].time = moment(data.codes[i].createdAt).format('dddd, MMMM Do YYYY, H:mm:ss a Z');
+        }
+        var HTML = render('list', {
+          codes: data.codes
+        });
+        $('#user-codes').html(HTML + '<div id="pagenavi"></div>');
+        qwest
+          .get(api('latest'), {
+            page: page + 1,
+            user: username
+          })
+          .then(function(data) {
+            var hasPrev = data.codes.length > 0 ? true : false;
+            var hasNext = true;
+            if (page == 1) {
+              hasNext = false;
+            }
+            var pagenavi = render('pagenavi', {
+              prep: 'user/' + action,
+              hasNext: hasNext,
+              hasPrev: hasPrev,
+              nextpage: page - 1,
+              prevpage: page + 1
+            });
+            if (!hasNext && !hasPrev) {
+              pagenavi = '';
+            }
+            $('#pagenavi').html(pagenavi);
+          })
+      })
+  }
 };
 
 $(function() {
@@ -363,6 +378,24 @@ $(function() {
       }
       return false;
     })
+    .on('click', '#create-folder', function() {
+      var folder = {
+        name: $('#folder-name').val(),
+        description: $('#folder-description').val()
+      }
+      if (!folder.name || !folder.description) {
+        return biu('warning', 'You havn\'t finished the form!');
+      }
+      qwest.post(api('new_folder'), {
+          folder: folder,
+          user_id: store.get('user_id'),
+          username: store.get('userdata').login,
+          type: $(this).data('type')
+        })
+        .then(function(data) {
+          console.log(data);
+        })
+    })
 
 
 });
@@ -375,6 +408,21 @@ Q.reg('logout', ExitRouter);
 Q.reg('code', CodeRouter);
 Q.reg('user', UserRouter);
 Q.reg('search', SearchRouter);
+Q.reg('folders', FoldersRouter);
+
+function FoldersRouter(id) {
+
+  var userdata = store.get('userdata');
+  renderHeader({
+    userdata: userdata
+  });
+  if (id == 'new') {
+    title('New folder');
+    console.log('new folder');
+    var html = render('new-folder');
+    $('#output').html(html);
+  }
+}
 
 function SearchRouter(q, page) {
   page = page || 1;
@@ -417,7 +465,7 @@ function SearchRouter(q, page) {
             prevpage: page + 1,
             sid: sid
           });
-          if(!hasNext && !hasPrev) {
+          if (!hasNext && !hasPrev) {
             pagenavi = '';
           }
           $('#pagenavi').html(pagenavi);
@@ -504,7 +552,7 @@ function deleteCode(code_obj_id) {
 
 function parseData(data) {
   for (var i = 0; i < data.codes.length; i++) {
-    
+
     data.codes[i].timeago = moment(data.codes[i].createdAt).fromNow();
     data.codes[i].line_number = lineNumber(data.codes[i].content);
     data.codes[i].time = moment(data.codes[i].createdAt).format('dddd, MMMM Do YYYY, H:mm:ss a Z');

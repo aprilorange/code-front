@@ -146,11 +146,45 @@
 
       <section id="userinfo">Loading...</section>
       <section id="user-codes"></section>
+      <section id="user-folders"></section>
     </script>
     <script id="userinfo-template" type="text/template">
     <header class="user-header">
+        <div class="fr">
+        {% if userdata and objectId == my_id %}
+          <a class="btn btn-sm" href="#!new">New Code</a>
+          <a class="btn btn-sm" href="#!folders/new">New folder</a>
+        {% endif %}
+        </div>
         <span class="octicon octicon-person"></span> <a href="/#!user/{{username}}">{{username}}</a>
     </header>
+    <div class="tabnav" style="margin-bottom:20px;">
+      <nav class="tabnav-tabs">
+        <a href="#!user/{{username}}/codes" class="tabnav-tab{%if tab == 'codes'%} selected{%endif%}">Codes</a>
+        <a href="#!user/{{username}}/folders" class="tabnav-tab{%if tab == 'folders'%} selected{%endif%}">Folders</a>
+      </nav>
+    </div>
+    </script>
+    <script id="folders-template" type="text/template">
+      {% for folder in folders %}
+        <a class="folder" href="#!folders/{{folder.randomid}}">
+          <h2 class="folder-name"><span class="octicon octicon-file-directory"></span> {{folder.name}}</h2>
+        </a>
+      {% endfor %}
+    </script>
+    <script id="new-folder-template" type="text/template">
+    <div class="page-title">
+      <h2><span class="octicon octicon-file-directory"></span> New folder</h2>
+    </div>
+    <form class="new-folder" onsubmit="return false;">
+      <input class="form-control block" id="folder-name" placeholder="name">
+      <textarea class="form-control block" id="folder-description" placeholder="description..." rows="5"></textarea>
+      <div class="editor-footer clearfix">
+        <div class="fr">
+          <button class="btn btn-blue" id="create-folder" data-type="new">Submit</button>
+        </div>
+      </div>
+    </form>
     </script>
     {% endraw %}
     <script src="./build/js/vendor.js?t={{buildTime}}"></script>
