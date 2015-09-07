@@ -4,8 +4,9 @@
     <meta charset="utf-8">
     <title>Code</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="http://cdn.staticfile.org/octicons/2.1.2/octicons.min.css">
-    <link rel="stylesheet" type="text/css" href="/build/css/markdown.css ">
+    <link rel="stylesheet" href="http://cdn.staticfile.org/octicons/2.1.2/octicons.min.css">
+    <link rel="stylesheet" href="http://cdn.jsdelivr.net/font-hack/2.010/css/hack.min.css">
+    <link rel="stylesheet" href="/build/css/markdown.css ">
     <link rel="stylesheet" href="./build/css/main.css?t={{buildTime}}" media="screen" charset="utf-8">
   </head>
   <body>
@@ -85,15 +86,15 @@
             {% endif %}
             {% if code.language == 'Markdown' and codepage %}
               <div class="markdown-body">{{code.marked|safe}}</div>
-             
+
             {% else %}
               <pre class="pre">{{code.line_number|safe}}<code class="{{code.language.toLowerCase()}}">{{code.content_highlight|safe}}</code></pre>
             {% endif %}
-            
+
             </div>
           </header>
         </div>
-        
+
         {% if codepage %}
         <div class="item-code-opts">
           <div class="item-code-frame">
@@ -114,7 +115,7 @@
     <script id="pagenavi-template" type="text/template">
       <div class="pagenavi">
         <a class="pagenavi-link pagenavi-left{% if not hasPrev %} pagenavi-disable{% endif %}" href="/#!{{prep}}/{{prevpage}}">Prev</a>
-        
+
         <a class="pagenavi-link pagenavi-right{% if not hasNext %} pagenavi-disable{% endif %}" href="/#!{{prep}}/{{nextpage}}">Next</a>
       </div>
     </script>
